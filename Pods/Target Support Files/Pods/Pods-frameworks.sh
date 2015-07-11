@@ -48,8 +48,18 @@ code_sign() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework 'Bolts.framework'
   install_framework 'Cartography.framework'
+  install_framework 'FBSDKCoreKit.framework'
+  install_framework 'FBSDKLoginKit.framework'
+  install_framework 'Parse.framework'
+  install_framework 'ParseFacebookUtilsV4.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework 'Bolts.framework'
   install_framework 'Cartography.framework'
+  install_framework 'FBSDKCoreKit.framework'
+  install_framework 'FBSDKLoginKit.framework'
+  install_framework 'Parse.framework'
+  install_framework 'ParseFacebookUtilsV4.framework'
 fi
