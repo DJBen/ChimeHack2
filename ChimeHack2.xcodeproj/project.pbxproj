@@ -13,6 +13,7 @@
 		30767F361B519E32004E9278 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30767F351B519E32004E9278 /* Images.xcassets */; };
 		30767F391B519E32004E9278 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30767F371B519E32004E9278 /* LaunchScreen.xib */; };
 		30767F451B519E33004E9278 /* ChimeHack2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F441B519E33004E9278 /* ChimeHack2Tests.swift */; };
+		D62D5CCFB8E1BCCF09A0685C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E62B4C83A6734131F1B4098 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,9 @@
 		30767F3E1B519E33004E9278 /* ChimeHack2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChimeHack2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		30767F431B519E33004E9278 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30767F441B519E33004E9278 /* ChimeHack2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChimeHack2Tests.swift; sourceTree = "<group>"; };
+		53AABEB408FCCEC4C1767FEB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		5E62B4C83A6734131F1B4098 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F157711082B65DE0D32AD065 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D62D5CCFB8E1BCCF09A0685C /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +67,8 @@
 				30767F2B1B519E32004E9278 /* ChimeHack2 */,
 				30767F411B519E33004E9278 /* ChimeHack2Tests */,
 				30767F2A1B519E32004E9278 /* Products */,
+				8555FCBDB44FD23368597440 /* Pods */,
+				3C0BCF1E62BC6539DF574F14 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +119,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		3C0BCF1E62BC6539DF574F14 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5E62B4C83A6734131F1B4098 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8555FCBDB44FD23368597440 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F157711082B65DE0D32AD065 /* Pods.debug.xcconfig */,
+				53AABEB408FCCEC4C1767FEB /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -119,9 +143,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 30767F481B519E33004E9278 /* Build configuration list for PBXNativeTarget "ChimeHack2" */;
 			buildPhases = (
+				648BB46ED1D751E7AA88D3B2 /* Check Pods Manifest.lock */,
 				30767F251B519E32004E9278 /* Sources */,
 				30767F261B519E32004E9278 /* Frameworks */,
 				30767F271B519E32004E9278 /* Resources */,
+				758BEA6F8BEA430D32ECF8C0 /* Embed Pods Frameworks */,
+				929A5B599CA4007772B7BD36 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -206,6 +233,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		648BB46ED1D751E7AA88D3B2 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		758BEA6F8BEA430D32ECF8C0 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		929A5B599CA4007772B7BD36 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		30767F251B519E32004E9278 /* Sources */ = {
@@ -340,6 +415,7 @@
 		};
 		30767F491B519E33004E9278 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F157711082B65DE0D32AD065 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ChimeHack2/Info.plist;
@@ -350,6 +426,7 @@
 		};
 		30767F4A1B519E33004E9278 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 53AABEB408FCCEC4C1767FEB /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ChimeHack2/Info.plist;
@@ -411,6 +488,7 @@
 				30767F4A1B519E33004E9278 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		30767F4B1B519E33004E9278 /* Build configuration list for PBXNativeTarget "ChimeHack2Tests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +497,7 @@
 				30767F4D1B519E33004E9278 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
