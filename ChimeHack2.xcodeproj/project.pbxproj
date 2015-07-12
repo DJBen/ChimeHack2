@@ -8,11 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		30767F2F1B519E32004E9278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F2E1B519E32004E9278 /* AppDelegate.swift */; };
-		30767F311B519E32004E9278 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F301B519E32004E9278 /* ViewController.swift */; };
+		30767F311B519E32004E9278 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F301B519E32004E9278 /* LoginViewController.swift */; };
 		30767F341B519E32004E9278 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30767F321B519E32004E9278 /* Main.storyboard */; };
 		30767F361B519E32004E9278 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30767F351B519E32004E9278 /* Images.xcassets */; };
 		30767F391B519E32004E9278 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30767F371B519E32004E9278 /* LaunchScreen.xib */; };
 		30767F451B519E33004E9278 /* ChimeHack2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F441B519E33004E9278 /* ChimeHack2Tests.swift */; };
+		30767F531B51D86C004E9278 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F521B51D86C004E9278 /* EventsTableViewController.swift */; };
+		30767F551B51DC92004E9278 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F541B51DC92004E9278 /* EventTableViewCell.swift */; };
+		30767F571B51DFAE004E9278 /* ChimeHackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F561B51DFAE004E9278 /* ChimeHackManager.swift */; };
+		30767F591B51E459004E9278 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F581B51E459004E9278 /* Event.swift */; };
+		30767F5B1B51F9F7004E9278 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F5A1B51F9F7004E9278 /* Place.swift */; };
 		D62D5CCFB8E1BCCF09A0685C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E62B4C83A6734131F1B4098 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -30,7 +35,7 @@
 		30767F291B519E32004E9278 /* ChimeHack2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChimeHack2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30767F2D1B519E32004E9278 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30767F2E1B519E32004E9278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		30767F301B519E32004E9278 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		30767F301B519E32004E9278 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		30767F331B519E32004E9278 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		30767F351B519E32004E9278 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		30767F381B519E32004E9278 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -38,6 +43,11 @@
 		30767F431B519E33004E9278 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30767F441B519E33004E9278 /* ChimeHack2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChimeHack2Tests.swift; sourceTree = "<group>"; };
 		30767F4E1B51CDEA004E9278 /* ChimeHack2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChimeHack2-Bridging-Header.h"; sourceTree = "<group>"; };
+		30767F521B51D86C004E9278 /* EventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
+		30767F541B51DC92004E9278 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		30767F561B51DFAE004E9278 /* ChimeHackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChimeHackManager.swift; sourceTree = "<group>"; };
+		30767F581B51E459004E9278 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		30767F5A1B51F9F7004E9278 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		53AABEB408FCCEC4C1767FEB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5E62B4C83A6734131F1B4098 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F157711082B65DE0D32AD065 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -86,7 +96,12 @@
 			isa = PBXGroup;
 			children = (
 				30767F2E1B519E32004E9278 /* AppDelegate.swift */,
-				30767F301B519E32004E9278 /* ViewController.swift */,
+				30767F301B519E32004E9278 /* LoginViewController.swift */,
+				30767F521B51D86C004E9278 /* EventsTableViewController.swift */,
+				30767F541B51DC92004E9278 /* EventTableViewCell.swift */,
+				30767F561B51DFAE004E9278 /* ChimeHackManager.swift */,
+				30767F581B51E459004E9278 /* Event.swift */,
+				30767F5A1B51F9F7004E9278 /* Place.swift */,
 				30767F321B519E32004E9278 /* Main.storyboard */,
 				30767F351B519E32004E9278 /* Images.xcassets */,
 				30767F371B519E32004E9278 /* LaunchScreen.xib */,
@@ -290,8 +305,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30767F311B519E32004E9278 /* ViewController.swift in Sources */,
+				30767F551B51DC92004E9278 /* EventTableViewCell.swift in Sources */,
+				30767F571B51DFAE004E9278 /* ChimeHackManager.swift in Sources */,
+				30767F311B519E32004E9278 /* LoginViewController.swift in Sources */,
 				30767F2F1B519E32004E9278 /* AppDelegate.swift in Sources */,
+				30767F591B51E459004E9278 /* Event.swift in Sources */,
+				30767F5B1B51F9F7004E9278 /* Place.swift in Sources */,
+				30767F531B51D86C004E9278 /* EventsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
