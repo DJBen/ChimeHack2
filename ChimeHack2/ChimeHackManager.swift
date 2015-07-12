@@ -19,27 +19,22 @@ class ChimeHackManager: NSObject {
         super.init()
     }
     
-    private var userID: String?
-    
-    func getUser(completion: (id: String, name: String, pictureURL: NSURL) -> Void) {
-        if userID == nil {
-            FBSDKGraphRequest(graphPath: "/me?fields=id,name,picture", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
-                if error != nil {
-                    println(error)
-                    return
-                }
-                if let dict = result as? [String: AnyObject] {
-                    self.userID = dict["id"]! as? String
-                    let name = dict["name"]! as! String
-                    let id = dict["id"]! as! String
-                    let pictureURL = dict["picture"]!["url"] as! String
-                    let url =  NSURL(string: pictureURL)!
-                    completion(id: id, name: name, pictureURL: url)
-                }
-            })
-        } else {
-            completion(id: "", name: "", pictureURL: NSURL())
-        }
+    func getUser(identifier: Int = 0, userID: String = "me", completion: (id: String, name: String, pictureURL: NSURL, identifier: Int) -> Void) {
+        FBSDKGraphRequest(graphPath: "/\(userID)?fields=id,name,picture", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
+            if error != nil {
+                println(error)
+                return
+            }
+            if let dict = result as? [String: AnyObject] {
+                let userID = dict["id"]! as? String
+                let name = dict["name"]! as! String
+                let id = dict["id"]! as! String
+                let pictureData = dict["picture"] as! [String: AnyObject]
+                let pictureURL = pictureData["data"]!["url"] as! String
+                let url =  NSURL(string: pictureURL)!
+                completion(id: id, name: name, pictureURL: url, identifier: identifier)
+            }
+        })
     }
     
     func getEvents(completion: ([Event], NSError?) -> Void) {
