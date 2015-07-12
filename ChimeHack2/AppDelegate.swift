@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKCoreKit
 import Parse
+import ParseFacebookUtilsV4
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,14 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories: nil )
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
-        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        Parse.setApplicationId("75k9ajwFs9ODbQE6OmdoMY1wrTI0VhHxZSs04YUM", clientKey:"Vvm83OUxa4XGPaSBdhaMWSgLXU8ETHnw5gvJf8g4")
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+    
+        return true
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let currentInstallation = PFInstallation()
         currentInstallation.setDeviceTokenFromData(deviceToken)
         currentInstallation.channels = ["global"]
-        currentInstallation.saveInBackground()
+        currentInstallation.saveEventually()
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

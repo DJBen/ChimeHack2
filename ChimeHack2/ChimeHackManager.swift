@@ -45,8 +45,16 @@ class ChimeHackManager: NSObject {
                 completion([], error)
                 return
             }
-            let events = Event.eventsFromGraphAPIPayload(result as! [String: AnyObject])
+            let events = [self.mockupEvent] + Event.eventsFromGraphAPIPayload(result as! [String: AnyObject])
             completion(events, nil)
+        }
+    }
+
+    var mockupEvent: Event {
+        get {
+            let cover = Event.Cover(id: "chimehack2cover", sourceURL: NSURL(string: "http://www.rantlifestyle.com/wp-content/uploads/2014/08/017.jpg")!)
+            let event = Event(id: "chimehack2", name: "Fraternity Annual \"Just Drink\" Party", eventDescription: "It's time to drink; it's time for fun; it's the day in the year!", startTime: NSDate(), endTime: NSDate(timeIntervalSinceNow: 60 * 60 * 2), RSVP: .Attending, place: Place(), cover: cover)
+            return event
         }
     }
 }

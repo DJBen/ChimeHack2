@@ -33,6 +33,12 @@ class Event: NSObject, Printable {
                 return nil
             }
         }
+        
+        init(offset: CGPoint = CGPointZero, id: String, sourceURL: NSURL) {
+            self.offset = offset
+            self.id = id
+            self.sourceURL = sourceURL
+        }
     }
     
     let eventDescription: String
@@ -54,6 +60,18 @@ class Event: NSObject, Printable {
         formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH:mm:ssZ"
         return formatter
     }()
+    
+    init(id: String, name: String, eventDescription: String, startTime: NSDate, endTime: NSDate, RSVP: RSVPStatus, place: Place, cover: Cover? = nil) {
+        self.id = id
+        self.name = name
+        self.eventDescription = eventDescription
+        self.startTime = startTime
+        self.endTime = endTime
+        self.place = place
+        self.cover = cover
+        self.RSVP = RSVP
+        super.init()
+    }
     
     init?(dictionary: [String: AnyObject]) {
         let data = dictionary

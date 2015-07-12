@@ -7,17 +7,18 @@
 //
 
 import UIKit
-import FBSDKLoginKit
 import Cartography
+import ParseFacebookUtilsV4
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
+class LoginViewController: UIViewController {
     
     static let EventsTableViewControllerSegueIdentifier = "events"
     
-    lazy var loginButton: FBSDKLoginButton = {
-        let button = FBSDKLoginButton()
-        button.delegate = self
-        button.readPermissions = ["public_profile", "email", "user_friends", "user_events", "user_photos"]
+    lazy var loginButton: UIButton = {
+        let button = UIButton.buttonWithType(.Custom) as! UIButton
+        button.setImage(UIImage(named: "icon_facebook"), forState: .Normal)
+        button.addTarget(self, action: "login:", forControlEvents: .TouchUpInside)
+        button.tintColor = UIColor(red: 59/255.0, green: 85/255.0, blue: 152/255.0, alpha:1)
         return button
     }()
     
@@ -30,9 +31,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         super.viewDidLoad()
         setupViews()
         
-        if FBSDKAccessToken.currentAccessToken() != nil {
-            performSegueWithIdentifier(LoginViewController.EventsTableViewControllerSegueIdentifier, sender: self)
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,8 +44,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         layout(loginButton) { b in
             b.centerX == b.superview!.centerX
-            b.height == 45
-            b.width == 200
+            b.height == 80
+            b.width == b.height
             b.bottom == b.superview!.bottom - 80
         }
         
@@ -58,16 +56,31 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     // MARK: - Login button
     
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        if error != nil {
-            println(error)
+    func login(sender: UIButton) {
+        let login = { [weak self] in
+            self?.performSegueWithIdentifier(LoginViewController.EventsTableViewControllerSegueIdentifier, sender: self)
+        }
+        if PFUser.currentUser() != nil {
+            login()
             return
         }
-        performSegueWithIdentifier(LoginViewController.EventsTableViewControllerSegueIdentifier, sender: self)
-    }
-    
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        
+        let readPermissions = ["public_profile", "email", "user_friends", "user_events", "user_photos"]
+        PFFacebookUtils.logInInBackgroundWithReadPermissions(readPermissions) { (user, error) -> Void in
+            if error != nil {
+                println(error)
+                return
+            }
+            if let user = user {
+                if user.isNew {
+                    println("User signed up and logged in through Facebook!")
+                } else {
+                    println("User logged in through Facebook!")
+                }
+                login()
+            } else {
+                println("Uh oh. The user cancelled the Facebook login.")
+            }
+        }
     }
 
 }

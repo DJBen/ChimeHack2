@@ -46,6 +46,13 @@ class Place: NSObject {
         super.init()
     }
     
+    init(id: String, name: String, location: Location? = nil) {
+        self.id = id
+        self.name = name
+        self.location = location
+        super.init()
+    }
+    
     init?(dictionary: [String: AnyObject]) {
         if let name = dictionary["name"] as? String {
             self.id = dictionary["id"] as? String

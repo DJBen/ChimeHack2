@@ -73,14 +73,22 @@ class WatcherViewController: UIViewController {
     }()
     
     lazy var greenView: UIView = {
-        let view = UIView()
+        let view = UIView(frame: CGRectMake(0, 0, 200, 200))
+        view.layer.cornerRadius = min(view.frame.size.width, view.frame.size.height) / 2
         view.layer.shadowColor = UIColor(red: 97/255.0, green: 159/255.0, blue: 180/255.0, alpha: 1).CGColor
         view.backgroundColor = UIColor(red: 122/255.0, green: 226/255.0, blue: 200/255.0, alpha: 1)
         view.layer.shadowOpacity = 0.1
         return view
     }()
     
-    private var watched: Bool = false
+    private var watched: Bool {
+        get {
+            return NSUserDefaults.standardUserDefaults().boolForKey("watched_\(event.id)")
+        }
+        set {
+            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: "watched_\(event.id)")
+        }
+    }
     
     override func awakeFromNib() {
         setupViews()
@@ -93,6 +101,7 @@ class WatcherViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.adjustWatchSize()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -107,20 +116,13 @@ class WatcherViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        greenView.layer.cornerRadius = min(greenView.frame.size.width, greenView.frame.size.height) / 2
         backButton.layer.cornerRadius = min(backButton.frame.size.width, backButton.frame.size.height) / 2
     }
     
     func watchMe(sender: UIButton) {
         UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
-            if !self.watched {
-                var multiplier = max(self.view.bounds.height, self.view.bounds.width) / max(self.greenView.frame.height, self.greenView.frame.width)
-                multiplier += 350 / max(self.view.bounds.height, self.view.bounds.width)
-                self.greenView.transform = CGAffineTransformMakeScale(multiplier, multiplier)
-            } else {
-                self.greenView.transform = CGAffineTransformIdentity
-            }
             self.watched = !self.watched
+            self.adjustWatchSize()
         }) { (completed) -> Void in
             
         }
@@ -141,6 +143,7 @@ class WatcherViewController: UIViewController {
     */
     
     private func setupViews() {
+        view.clipsToBounds = true
         view.addSubview(greenView)
         view.addSubview(watchButton)
         view.addSubview(backButton)
@@ -174,6 +177,18 @@ class WatcherViewController: UIViewController {
             g.width == g.height
             g.width == w.width
             g.center == w.center
+        }
+    }
+    
+    private func adjustWatchSize() {
+        if self.watched {
+            self.greenView.transform = CGAffineTransformMakeScale(4, 4)
+            watchButton.setTitle("Watched!", forState: .Normal)
+            watchButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        } else {
+            self.greenView.transform = CGAffineTransformIdentity
+            watchButton.setTitle("Watch Me", forState: .Normal)
+            watchButton.setTitleColor(UIColor(red: 22/255.0, green: 19/255.0, blue: 59/255.0, alpha: 1), forState: .Normal)
         }
     }
 

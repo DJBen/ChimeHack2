@@ -8,9 +8,6 @@
 
 import UIKit
 
-
-
-
 let safeButton = "SAFE_IDENTIFIER"
 let helpButton = "HELP_IDENTIFIER"
 

@@ -30,9 +30,9 @@ PODS:
 
 DEPENDENCIES:
   - Cartography (~> 0.5.0)
-  - FBSDKCoreKit (~> 4.4.0)
+  - FBSDKCoreKit
   - Parse (~> 1.7.5)
-  - ParseFacebookUtilsV4 (~> 1.7.5)
+  - ParseFacebookUtilsV4
   - SDWebImage (~> 3.7.2)
 
 SPEC CHECKSUMS:
