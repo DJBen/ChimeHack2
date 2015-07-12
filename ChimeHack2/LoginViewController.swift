@@ -18,12 +18,14 @@ class LoginViewController: UIViewController {
         let button = UIButton.buttonWithType(.Custom) as! UIButton
         button.setImage(UIImage(named: "icon_facebook"), forState: .Normal)
         button.addTarget(self, action: "login:", forControlEvents: .TouchUpInside)
-        button.tintColor = UIColor(red: 59/255.0, green: 85/255.0, blue: 152/255.0, alpha:1)
+//        button.tintColor = UIColor(red: 59/255.0, green: 85/255.0, blue: 152/255.0, alpha:1)
+        button.tintColor = UIColor.whiteColor()
         return button
     }()
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "LoginScreen")
         return imageView
     }()
 
@@ -44,6 +46,16 @@ class LoginViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController!.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController!.setNavigationBarHidden(false, animated: false)
     }
 
     private func setupViews() {
