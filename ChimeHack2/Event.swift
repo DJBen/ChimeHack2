@@ -20,7 +20,7 @@ class Event: NSObject, Printable {
     let RSVP: RSVPStatus
     let startTime: NSDate
     let endTime: NSDate
-    let location: CLLocationCoordinate2D
+    let place: Place
     
     override var description: String {
         return "\(name) (\(startTime) - \(endTime)): \(RSVP.rawValue)"
@@ -35,12 +35,12 @@ class Event: NSObject, Printable {
     
     init?(dictionary: [String: AnyObject]) {
         let data = dictionary
-        if let eventDescription = data["description"] as? String, id = data["id"] as? String, name = data["name"] as? String, startTimeString = data["start_time"] as? String, endTimeString = data["end_time"] as? String, rsvpString = data["rsvp_status"] as? String {
+        if let eventDescription = data["description"] as? String, id = data["id"] as? String, name = data["name"] as? String, startTimeString = data["start_time"] as? String, endTimeString = data["end_time"] as? String, rsvpString = data["rsvp_status"] as? String, placeDict = data["place"] as? [String: AnyObject] {
             self.eventDescription = eventDescription
             self.id = id
             self.name = name
             self.RSVP = RSVPStatus(rawValue: rsvpString)!
-            self.location = CLLocationCoordinate2D()
+            self.place = Place(dictionary: placeDict)!
             
             if let startTime = dateFormatter.dateFromString(startTimeString), endTime = dateFormatter.dateFromString(endTimeString) {
                 self.startTime = startTime
@@ -60,7 +60,7 @@ class Event: NSObject, Printable {
             self.RSVP = .Unsure
             self.startTime = NSDate()
             self.endTime = NSDate()
-            self.location = CLLocationCoordinate2D()
+            self.place = Place()
             super.init()
             return nil
         }
