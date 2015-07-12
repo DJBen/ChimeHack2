@@ -7,17 +7,30 @@
 //
 
 import UIKit
+import Parse
+import Cartography
+
+let WatchInterval: NSTimeInterval = 10
 
 class FriendsTableViewController: UITableViewController {
+    
+    var event: Event!
+    static let FriendCellIdentifier = "FriendCellIdentifier"
+    
+    var friends = [String: [String: String]]()
+    var timer: NSTimer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        retrieveUsers()
+    
+        timer = NSTimer.scheduledTimerWithTimeInterval(WatchInterval, target: self, selector: "timerTick:", userInfo: nil, repeats: true)
+    }
+    
+    func timerTick(sender: NSTimer) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,30 +41,40 @@ class FriendsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+        return friends.count
     }
 
     private func retrieveUsers() {
-        
+        var ref = Firebase(url:"https://cradle.firebaseIO.com/")
+        ref.observeEventType(.Value, withBlock: { snapshot in
+            println(snapshot.value)
+            self.friends = snapshot.value as! [String: [String: String]]
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+        }, withCancelBlock: { error in
+            println(error.description)
+        })
     }
     
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(FriendsTableViewController.FriendCellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+        let friendsList = friends.keys.array
+        cell.textLabel!.text = friendsList[indexPath.row]
+        let events = friends[friendsList[indexPath.row]]!
+        if let checkinTime = events["chimehack2"] {
+            let date: NSDate = Event.dateFormatter.dateFromString(checkinTime)!
+            if NSDate().timeIntervalSinceDate(date) > WatchInterval * 2 {
+                cell.detailTextLabel!.text = "!!! Maybe in danger !!!"
+            } else {
+                cell.detailTextLabel!.text = "Safe"
+            }
+        }
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

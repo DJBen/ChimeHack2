@@ -56,7 +56,7 @@ class Event: NSObject, Printable {
     }
     
     // RFC 3339 date-time
-    private var dateFormatter: NSDateFormatter = {
+    static var dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH:mm:ssZ"
         return formatter
@@ -84,7 +84,7 @@ class Event: NSObject, Printable {
             self.place = Place(dictionary: placeDict)!
             self.cover = Cover(dictionary: coverDict)
             
-            if let startTime = dateFormatter.dateFromString(startTimeString), endTime = dateFormatter.dateFromString(endTimeString) {
+            if let startTime = Event.dateFormatter.dateFromString(startTimeString), endTime = Event.dateFormatter.dateFromString(endTimeString) {
                 self.startTime = startTime
                 self.endTime = endTime
                 super.init()
@@ -112,7 +112,7 @@ class Event: NSObject, Printable {
     func writeSafeUpdate() {
         let myRootRef = Firebase(url:"https://cradle.firebaseIO.com")
         let path = myRootRef.childByAppendingPath(PFUser.currentUser()!.username!).childByAppendingPath(id)
-        path.setValue(dateFormatter.stringFromDate(NSDate()), withCompletionBlock: { (error, base) -> Void in
+        path.setValue(Event.dateFormatter.stringFromDate(NSDate()), withCompletionBlock: { (error, base) -> Void in
             if error != nil {
                 println(error)
             }

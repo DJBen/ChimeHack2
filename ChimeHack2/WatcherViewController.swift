@@ -13,6 +13,8 @@ import Cartography
 
 class WatcherViewController: UIViewController {
     
+    static let FriendsTableViewControllerSegueIdentifier = "friends"
+    
     var event: Event! {
         didSet {
             let dateString = dateFormatter.stringFromDate(event.startTime)
@@ -64,7 +66,7 @@ class WatcherViewController: UIViewController {
         let button = UIButton.buttonWithType(.Custom) as! UIButton
         button.addTarget(self, action: "watchMe:", forControlEvents: .TouchUpInside)
         button.titleLabel!.font = UIFont(name: "HelveticaNeue-UltraLight", size: 30)
-        button.setTitle("Watch Me", forState: .Normal)
+        button.setTitle("Be Cradled!", forState: .Normal)
         button.setTitleColor(UIColor(red: 22/255.0, green: 19/255.0, blue: 59/255.0, alpha: 1), forState: .Normal)
         button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
         button.layer.shadowOffset = CGSizeMake(0.0, 2.0)
@@ -146,7 +148,7 @@ class WatcherViewController: UIViewController {
     }
     
     func seeFriends(sender: UIButton) {
-        
+        performSegueWithIdentifier(WatcherViewController.FriendsTableViewControllerSegueIdentifier, sender: self)
     }
     
     func safe(sender: UIButton) {
@@ -171,15 +173,17 @@ class WatcherViewController: UIViewController {
         navigationController!.popViewControllerAnimated(true)
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == WatcherViewController.FriendsTableViewControllerSegueIdentifier {
+            let vc = segue.destinationViewController as! FriendsTableViewController
+            vc.event = event
+        }
     }
-    */
+    
     
     private func setupViews() {
         view.clipsToBounds = true
@@ -237,11 +241,11 @@ class WatcherViewController: UIViewController {
     private func adjustWatchSize() {
         if self.watched {
             self.greenView.transform = CGAffineTransformMakeScale(4, 4)
-            watchButton.setTitle("Watched!", forState: .Normal)
+            watchButton.setTitle("Uncradle", forState: .Normal)
             watchButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         } else {
             self.greenView.transform = CGAffineTransformIdentity
-            watchButton.setTitle("Watch Me", forState: .Normal)
+            watchButton.setTitle("Be Cradled!", forState: .Normal)
             watchButton.setTitleColor(UIColor(red: 22/255.0, green: 19/255.0, blue: 59/255.0, alpha: 1), forState: .Normal)
         }
     }

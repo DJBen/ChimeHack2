@@ -21,20 +21,24 @@ class ChimeHackManager: NSObject {
     
     private var userID: String?
     
-    func getUserID(completion: (String) -> Void) {
+    func getUser(completion: (id: String, name: String, pictureURL: NSURL) -> Void) {
         if userID == nil {
-            FBSDKGraphRequest(graphPath: "/me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "/me?fields=id,name,picture", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if error != nil {
                     println(error)
                     return
                 }
-                if let dict = result as? [String: String] {
-                    self.userID = dict["id"]!
-                    completion(self.userID!)
+                if let dict = result as? [String: AnyObject] {
+                    self.userID = dict["id"]! as? String
+                    let name = dict["name"]! as! String
+                    let id = dict["id"]! as! String
+                    let pictureURL = dict["picture"]!["url"] as! String
+                    let url =  NSURL(string: pictureURL)!
+                    completion(id: id, name: name, pictureURL: url)
                 }
             })
         } else {
-            completion(userID!)
+            completion(id: "", name: "", pictureURL: NSURL())
         }
     }
     
