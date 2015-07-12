@@ -54,6 +54,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'FBSDKLoginKit.framework'
   install_framework 'Parse.framework'
   install_framework 'ParseFacebookUtilsV4.framework'
+  install_framework 'SDWebImage.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Bolts.framework'
@@ -62,4 +63,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'FBSDKLoginKit.framework'
   install_framework 'Parse.framework'
   install_framework 'ParseFacebookUtilsV4.framework'
+  install_framework 'SDWebImage.framework'
 fi

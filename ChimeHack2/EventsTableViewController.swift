@@ -15,6 +15,8 @@ class EventsTableViewController: UITableViewController {
     
     static let EventTableViewCellIdentifier = "EventTableViewCell"
     
+    var events = [Event]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -29,26 +31,19 @@ class EventsTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
+        return 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+        return events.count
     }
     
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-    
-    // Configure the cell...
-    
-    return cell
+        let cell = tableView.dequeueReusableCellWithIdentifier(EventsTableViewController.EventTableViewCellIdentifier, forIndexPath: indexPath) as! EventTableViewCell
+        cell.loadEvent(events[indexPath.row])
+        return cell
     }
-    */
+    
     
     /*
     // MARK: - Navigation
@@ -64,11 +59,14 @@ class EventsTableViewController: UITableViewController {
     
     private func setupViews() {
         tableView.registerClass(EventTableViewCell.self, forCellReuseIdentifier: EventsTableViewController.EventTableViewCellIdentifier)
+        tableView.estimatedRowHeight = 60
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     func fetchEvents() {
         CHM.getEvents { (events, error) -> Void in
-            println(events)
+            self.events = events
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
         }
     }
     

@@ -39,7 +39,7 @@ class ChimeHackManager: NSObject {
     }
     
     func getEvents(completion: ([Event], NSError?) -> Void) {
-        FBSDKGraphRequest(graphPath: "/me/events", parameters: nil).startWithCompletionHandler { (_, result, error) -> Void in
+        FBSDKGraphRequest(graphPath: "/me/events?fields=cover,id,name,rsvp_status,start_time,end_time,place,description", parameters: nil).startWithCompletionHandler { (_, result, error) -> Void in
             if error != nil {
                 println(error)
                 completion([], error)
