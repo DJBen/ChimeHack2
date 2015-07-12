@@ -57,7 +57,7 @@ class WatcherViewController: UIViewController {
         button.backgroundColor = UIColor(red: 97/255.0, green: 159/255.0, blue: 180/255.0, alpha: 1)
         button.layer.shadowOpacity = 0.1
         button.layer.shadowOffset = CGSizeMake(0.0, 2.0)
-        button.setTitle("Safe", forState: .Normal)
+        button.setTitle("I'm Safe", forState: .Normal)
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         return button
     }()

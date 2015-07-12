@@ -19,6 +19,7 @@ class FriendsTableViewController: UITableViewController {
     
     var friends = [String: [String: String]]()
     var timer: NSTimer?
+    var info = [String: [String: AnyObject]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +53,19 @@ class FriendsTableViewController: UITableViewController {
         var ref = Firebase(url:"https://cradle.firebaseIO.com/")
         ref.observeEventType(.Value, withBlock: { snapshot in
             println(snapshot.value)
-            self.friends = snapshot.value as! [String: [String: String]]
+            if let friends = snapshot.value as? [String: [String: String]] {
+                self.friends = friends
+                for (i, friendID) in enumerate(self.friends.keys.array) {
+                    CHM.getUser(identifier: i, userID: friendID, completion: { (id, name, pictureURL, identifier) -> Void in
+                        let subInfo = ["name": name, "url" : pictureURL]
+                        self.info[friendID] = subInfo
+                        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: identifier, inSection: 0)], withRowAnimation: .Automatic)
+                    })
+                    
+                }
+            } else {
+                self.friends = [:]
+            }
             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
         }, withCancelBlock: { error in
             println(error.description)
@@ -62,7 +75,15 @@ class FriendsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(FriendsTableViewController.FriendCellIdentifier, forIndexPath: indexPath) as! UITableViewCell
         let friendsList = friends.keys.array
-        cell.textLabel!.text = friendsList[indexPath.row]
+        let id = friendsList[indexPath.row]
+        if let url = info[id]?["url"] as? NSURL {
+            cell.imageView!.sd_setImageWithURL(url)
+        }
+        if let name = info[id]?["name"] as? String {
+            cell.textLabel!.text = name
+        } else {
+            cell.textLabel!.text = id
+        }
         let events = friends[friendsList[indexPath.row]]!
         if let checkinTime = events["chimehack2"] {
             let date: NSDate = Event.dateFormatter.dateFromString(checkinTime)!

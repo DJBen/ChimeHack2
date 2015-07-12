@@ -110,13 +110,15 @@ class Event: NSObject, Printable {
     }
     
     func writeSafeUpdate() {
-        let myRootRef = Firebase(url:"https://cradle.firebaseIO.com")
-        let path = myRootRef.childByAppendingPath(PFUser.currentUser()!.username!).childByAppendingPath(id)
-        path.setValue(Event.dateFormatter.stringFromDate(NSDate()), withCompletionBlock: { (error, base) -> Void in
-            if error != nil {
-                println(error)
-            }
-        })
+        CHM.getUser { (id, name, pictureURL, _) -> Void in
+            let myRootRef = Firebase(url:"https://cradle.firebaseIO.com")
+            let path = myRootRef.childByAppendingPath(id).childByAppendingPath(self.id)
+            path.setValue(Event.dateFormatter.stringFromDate(NSDate()), withCompletionBlock: { (error, base) -> Void in
+                if error != nil {
+                    println(error)
+                }
+            })
+        }
     }
     
     class func eventsFromGraphAPIPayload(payload: [String: AnyObject]) -> [Event] {
