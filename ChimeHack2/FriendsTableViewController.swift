@@ -96,6 +96,14 @@ class FriendsTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let controller = UIAlertController(title: "Notify", message: "Your friend may be in danger", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        controller.addAction(UIAlertAction(title: "Call Campus Police", style: UIAlertActionStyle.Destructive, handler: { (_) -> Void in
+            UIApplication.sharedApplication().openURL(NSURL(string: "tel://012-345-6789")!)
+        }))
+        controller.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        presentViewController(controller, animated: true, completion: nil)
+    }
 
     /*
     // Override to support conditional editing of the table view.

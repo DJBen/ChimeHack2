@@ -32,10 +32,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
-        if PFUser.currentUser() != nil {
-            self.performSegueWithIdentifier(LoginViewController.EventsTableViewControllerSegueIdentifier, sender: self)
-        }
     
         NSNotificationCenter.defaultCenter().addObserverForName(SafeNotificationName, object: nil, queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
             let eventId = notification.userInfo!["event"] as! String
@@ -79,10 +75,6 @@ class LoginViewController: UIViewController {
     func login(sender: UIButton) {
         let login = { [weak self] in
             self?.performSegueWithIdentifier(LoginViewController.EventsTableViewControllerSegueIdentifier, sender: self)
-        }
-        if PFUser.currentUser() != nil {
-            login()
-            return
         }
         let readPermissions = ["public_profile", "email", "user_friends", "user_events", "user_photos"]
         PFFacebookUtils.logInInBackgroundWithReadPermissions(readPermissions) { (user, error) -> Void in
