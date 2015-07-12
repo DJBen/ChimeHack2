@@ -56,10 +56,31 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Events" id="I3M-GG-FL2"/>
+                    <connections>
+                        <segue destination="G38-xk-DoJ" kind="show" identifier="watch" id="gy6-CF-3hf"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l8k-Nv-8LJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1897" y="356"/>
+        </scene>
+        <!--Watcher View Controller-->
+        <scene sceneID="ghx-uF-dVW">
+            <objects>
+                <viewController id="G38-xk-DoJ" customClass="WatcherViewController" customModule="ChimeHack2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="N7Z-rH-X3Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="uSx-MU-3JY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hpB-sd-klc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gQ9-Qo-aaR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2616" y="356"/>
         </scene>
     </scenes>
 </document>

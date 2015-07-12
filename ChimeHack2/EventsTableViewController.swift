@@ -14,6 +14,7 @@ import FBSDKLoginKit
 class EventsTableViewController: UITableViewController {
     
     static let EventTableViewCellIdentifier = "EventTableViewCell"
+    static let WatcherViewControllerSegueIdentifier = "watch"
     
     var events = [Event]()
     
@@ -44,16 +45,22 @@ class EventsTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let event = events[indexPath.row]
+        performSegueWithIdentifier(EventsTableViewController.WatcherViewControllerSegueIdentifier, sender: event)
+    }
     
-    /*
+    
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+        if segue.identifier == EventsTableViewController.WatcherViewControllerSegueIdentifier {
+            let event = sender as! Event
+            let vc = segue.destinationViewController as! WatcherViewController
+            vc.event = event
+        }
     }
-    */
+
     
     // MARK: - Private methods
     
