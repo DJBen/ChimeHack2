@@ -6,5 +6,5 @@ pod 'Parse', '~> 1.7.5'
 pod 'FBSDKCoreKit'
 pod 'ParseFacebookUtilsV4'
 pod 'SDWebImage', '~> 3.7.2'
-
+pod 'Firebase'
 

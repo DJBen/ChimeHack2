@@ -11,6 +11,8 @@ import FBSDKCoreKit
 import Parse
 import ParseFacebookUtilsV4
 
+let SafeNotificationName = "SafeNotification"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -18,13 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let types: UIUserNotificationType = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound
-        let settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories: nil )
-        application.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()
-        
+        PushNotificationManager.registerForPushNotifications()
+
         Parse.setApplicationId("75k9ajwFs9ODbQE6OmdoMY1wrTI0VhHxZSs04YUM", clientKey:"Vvm83OUxa4XGPaSBdhaMWSgLXU8ETHnw5gvJf8g4")
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     
         return true
     }
@@ -38,6 +39,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         PFPush.handlePush(userInfo)
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+        if identifier == safeIdentifier {
+            NSNotificationCenter.defaultCenter().postNotificationName(SafeNotificationName, object: self, userInfo: notification.userInfo)
+        } else if identifier == helpIdentifier {
+            
+        }
+        completionHandler()
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -56,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         FBSDKAppEvents.activateApp()
     }
 

@@ -17,6 +17,7 @@ class EventsTableViewController: UITableViewController {
     static let WatcherViewControllerSegueIdentifier = "watch"
     
     var events = [Event]()
+    var preselectedEventId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +75,19 @@ class EventsTableViewController: UITableViewController {
         CHM.getEvents { (events, error) -> Void in
             self.events = events
             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            self.checkPreselectedEvent()
+        }
+    }
+    
+    private func checkPreselectedEvent() {
+        if preselectedEventId != nil {
+            let selectedEvents = self.events.filter({ (event) -> Bool in
+                return event.id == self.preselectedEventId
+            })
+            if selectedEvents.isEmpty == false {
+                performSegueWithIdentifier(EventsTableViewController.WatcherViewControllerSegueIdentifier, sender: selectedEvents[0])
+                selectedEvents[0].writeSafeUpdate()
+            }
         }
     }
     

@@ -48,6 +48,18 @@ class WatcherViewController: UIViewController {
         return dateFormatter
     }()
     
+    lazy var safeButton: UIButton = {
+        let button = UIButton.buttonWithType(.Custom) as! UIButton
+        button.addTarget(self, action: "safe:", forControlEvents: .TouchUpInside)
+        button.layer.shadowColor = UIColor(red: 97/255.0, green: 159/255.0, blue: 180/255.0, alpha: 1).CGColor
+        button.backgroundColor = UIColor(red: 97/255.0, green: 159/255.0, blue: 180/255.0, alpha: 1)
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSizeMake(0.0, 2.0)
+        button.setTitle("Safe", forState: .Normal)
+        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        return button
+    }()
+    
     lazy var watchButton: UIButton = {
         let button = UIButton.buttonWithType(.Custom) as! UIButton
         button.addTarget(self, action: "watchMe:", forControlEvents: .TouchUpInside)
@@ -56,6 +68,18 @@ class WatcherViewController: UIViewController {
         button.setTitleColor(UIColor(red: 22/255.0, green: 19/255.0, blue: 59/255.0, alpha: 1), forState: .Normal)
         button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
         button.layer.shadowOffset = CGSizeMake(0.0, 2.0)
+        return button
+    }()
+    
+    lazy var friendsButton: UIButton = {
+        let button = UIButton.buttonWithType(.Custom) as! UIButton
+        button.addTarget(self, action: "seeFriends:", forControlEvents: .TouchUpInside)
+        button.layer.shadowColor = UIColor(red: 97/255.0, green: 159/255.0, blue: 180/255.0, alpha: 1).CGColor
+        button.backgroundColor = UIColor(red: 178/255.0, green: 134/255.0, blue: 228/255.0, alpha: 1)
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSizeMake(0.0, 2.0)
+        button.setTitle("Friends", forState: .Normal)
+        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         return button
     }()
     
@@ -117,11 +141,26 @@ class WatcherViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         backButton.layer.cornerRadius = min(backButton.frame.size.width, backButton.frame.size.height) / 2
+        friendsButton.layer.cornerRadius = min(friendsButton.frame.size.width, friendsButton.frame.size.height) / 2
+        safeButton.layer.cornerRadius = min(safeButton.frame.size.width, safeButton.frame.size.height) / 2
+    }
+    
+    func seeFriends(sender: UIButton) {
+        
+    }
+    
+    func safe(sender: UIButton) {
+        self.event.writeSafeUpdate()
     }
     
     func watchMe(sender: UIButton) {
         UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
             self.watched = !self.watched
+            if self.watched {
+                self.event.scheduleNotificationsWithInterval(10, times: 2)
+            } else {
+                self.event.cancelNotifications()
+            }
             self.adjustWatchSize()
         }) { (completed) -> Void in
             
@@ -147,10 +186,12 @@ class WatcherViewController: UIViewController {
         view.addSubview(greenView)
         view.addSubview(watchButton)
         view.addSubview(backButton)
+        view.addSubview(friendsButton)
+        view.addSubview(safeButton)
         view.addSubview(titleLabel)
         view.addSubview(timeLabel)
         
-        constrain(watchButton, backButton, titleLabel) { w, b, t in
+        constrain(watchButton, friendsButton, titleLabel) { w, b, t in
             w.center == w.superview!.center
             w.leading >= w.superview!.leadingMargin ~ 900
             w.width == w.height
@@ -166,6 +207,19 @@ class WatcherViewController: UIViewController {
         }
         
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 10))
+        
+        constrain(friendsButton, backButton) { f, b in
+            b.size == f.size
+            b.top == f.top
+            b.trailing == f.leading - 20
+        }
+        
+        constrain(safeButton, friendsButton) { s, f in
+            s.size == f.size
+            s.top == f.top
+            s.leading == f.trailing + 20
+        }
+        
         
         constrain(titleLabel, timeLabel) { t, m in
             m.top == t.bottom + 10

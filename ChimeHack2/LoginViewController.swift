@@ -31,6 +31,14 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         
+        if PFUser.currentUser() != nil {
+            self.performSegueWithIdentifier(LoginViewController.EventsTableViewControllerSegueIdentifier, sender: self)
+        }
+    
+        NSNotificationCenter.defaultCenter().addObserverForName(SafeNotificationName, object: nil, queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
+            let eventId = notification.userInfo!["event"] as! String
+            self.performSegueWithIdentifier(LoginViewController.EventsTableViewControllerSegueIdentifier, sender: eventId)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,6 +88,13 @@ class LoginViewController: UIViewController {
             } else {
                 println("Uh oh. The user cancelled the Facebook login.")
             }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let vc = segue.destinationViewController as! EventsTableViewController
+        if let id = sender as? String {
+            vc.preselectedEventId = id
         }
     }
 

@@ -57,4 +57,5 @@ class ChimeHackManager: NSObject {
             return event
         }
     }
+
 }

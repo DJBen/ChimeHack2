@@ -19,6 +19,7 @@
 		30767F591B51E459004E9278 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F581B51E459004E9278 /* Event.swift */; };
 		30767F5B1B51F9F7004E9278 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F5A1B51F9F7004E9278 /* Place.swift */; };
 		30767F5D1B52175D004E9278 /* WatcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F5C1B52175D004E9278 /* WatcherViewController.swift */; };
+		30767F5F1B52FC92004E9278 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30767F5E1B52FC92004E9278 /* FriendsTableViewController.swift */; };
 		ABD40FAB1B52245000955982 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD40FAA1B52245000955982 /* PushNotificationManager.swift */; };
 		D62D5CCFB8E1BCCF09A0685C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E62B4C83A6734131F1B4098 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		30767F581B51E459004E9278 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		30767F5A1B51F9F7004E9278 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		30767F5C1B52175D004E9278 /* WatcherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatcherViewController.swift; sourceTree = "<group>"; };
+		30767F5E1B52FC92004E9278 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		53AABEB408FCCEC4C1767FEB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5E62B4C83A6734131F1B4098 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABD40FAA1B52245000955982 /* PushNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				30767F301B519E32004E9278 /* LoginViewController.swift */,
 				30767F521B51D86C004E9278 /* EventsTableViewController.swift */,
 				30767F5C1B52175D004E9278 /* WatcherViewController.swift */,
+				30767F5E1B52FC92004E9278 /* FriendsTableViewController.swift */,
 				30767F541B51DC92004E9278 /* EventTableViewCell.swift */,
 				30767F561B51DFAE004E9278 /* ChimeHackManager.swift */,
 				ABD40FAA1B52245000955982 /* PushNotificationManager.swift */,
@@ -315,6 +318,7 @@
 				30767F571B51DFAE004E9278 /* ChimeHackManager.swift in Sources */,
 				ABD40FAB1B52245000955982 /* PushNotificationManager.swift in Sources */,
 				30767F311B519E32004E9278 /* LoginViewController.swift in Sources */,
+				30767F5F1B52FC92004E9278 /* FriendsTableViewController.swift in Sources */,
 				30767F5D1B52175D004E9278 /* WatcherViewController.swift in Sources */,
 				30767F2F1B519E32004E9278 /* AppDelegate.swift in Sources */,
 				30767F591B51E459004E9278 /* Event.swift in Sources */,

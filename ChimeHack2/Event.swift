@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import Parse
 
 class Event: NSObject, Printable {
     enum RSVPStatus: String {
@@ -106,6 +107,16 @@ class Event: NSObject, Printable {
             super.init()
             return nil
         }
+    }
+    
+    func writeSafeUpdate() {
+        let myRootRef = Firebase(url:"https://cradle.firebaseIO.com")
+        let path = myRootRef.childByAppendingPath(PFUser.currentUser()!.username!).childByAppendingPath(id)
+        path.setValue(dateFormatter.stringFromDate(NSDate()), withCompletionBlock: { (error, base) -> Void in
+            if error != nil {
+                println(error)
+            }
+        })
     }
     
     class func eventsFromGraphAPIPayload(payload: [String: AnyObject]) -> [Event] {

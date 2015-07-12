@@ -6,3 +6,4 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Parse/Parse.h>
+#import <Firebase/Firebase.h>

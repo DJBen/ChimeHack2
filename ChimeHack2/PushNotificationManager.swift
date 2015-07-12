@@ -8,33 +8,37 @@
 
 import UIKit
 
-let safeButton = "SAFE_IDENTIFIER"
-let helpButton = "HELP_IDENTIFIER"
+let safeIdentifier = "SAFE_IDENTIFIER"
+let helpIdentifier = "HELP_IDENTIFIER"
 
-class PushNotificationManager {
+class PushNotificationManager: NSObject {
     
-    init() {}
+    static let sharedManager = PushNotificationManager()
+    
+    override init() {
+        super.init()
+    }
 
     private class func createPushNotificationCategory(application: UIApplication) -> UIMutableUserNotificationCategory {
         
-        var safe: UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-        safe.identifier = safeButton
-        safe.title = "Safe"
+        let safe: UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+        safe.identifier = safeIdentifier
+        safe.title = "I'm Cool!"
         safe.destructive = false
         safe.authenticationRequired = false
         safe.activationMode = UIUserNotificationActivationMode.Background
         
-        var help: UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-        help.identifier = helpButton
-        help.title = "Help"
+        let help: UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+        help.identifier = helpIdentifier
+        help.title = "I Need Help! NOW!"
         help.destructive = true
         help.authenticationRequired = false
         help.activationMode = UIUserNotificationActivationMode.Foreground
         
-        var category: UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
+        let category: UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
         category.identifier = "CheckStatus"
-        category.setActions([safe, help], forContext: UIUserNotificationActionContext.Minimal)
-        category.setActions([safe, help], forContext: UIUserNotificationActionContext.Default)
+        category.setActions([help, safe], forContext: UIUserNotificationActionContext.Minimal)
+        category.setActions([help, safe], forContext: UIUserNotificationActionContext.Default)
         
         return category
     }
@@ -43,19 +47,57 @@ class PushNotificationManager {
         let application = UIApplication.sharedApplication()
         let categoryRegistration = createPushNotificationCategory(application)
         var types: UIUserNotificationType = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound
-        var settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories:[categoryRegistration])
+        var settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories:[categoryRegistration])
         application.registerUserNotificationSettings( settings )
         application.registerForRemoteNotifications()
-        
     }
     
     func handleActionWithIdentifier(application: UIApplication, handleActionWithIdentifier identifier: String?, userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        if identifier == safeButton {
+        if identifier == safeIdentifier {
             println("Clicked on a safe push notif")
-        } else if identifier == helpButton {
+        } else if identifier == helpIdentifier {
             println("Clicked on help push notif")
         }
         completionHandler()
+    }
+    
+    func schedulePushNotificationWithEvent(event: Event, interval: NSTimeInterval, times: Int) {
+        for i in 0..<times {
+            var calendar: NSCalendar = NSCalendar.autoupdatingCurrentCalendar()
+            var itemDate: NSDate = event.startTime.dateByAddingTimeInterval(interval * NSTimeInterval(i + 1))
+            var localNotif: UILocalNotification = UILocalNotification()
+            localNotif.fireDate = itemDate
+            localNotif.timeZone = NSTimeZone.defaultTimeZone()
+            localNotif.alertBody = "Are you safe in \(event.name)?"
+            localNotif.alertAction = nil
+            localNotif.alertTitle = "\(event.name)"
+            localNotif.soundName = UILocalNotificationDefaultSoundName
+            localNotif.applicationIconBadgeNumber = 1
+            localNotif.category = "CheckStatus"
+            localNotif.userInfo = ["event": event.id]
+            UIApplication.sharedApplication().scheduleLocalNotification(localNotif)
+        }
+    }
+    
+    func cancelNotificationsForEvent(event: Event) {
+        UIApplication.sharedApplication().scheduledLocalNotifications.map { object -> Void in
+            let notification = object as! UILocalNotification
+            let userInfo = notification.userInfo as! [String: AnyObject]
+            let id = userInfo["event"] as! String
+            if id == event.id {
+                UIApplication.sharedApplication().cancelLocalNotification(notification)
+            }
+        }
+    }
+}
+
+extension Event {
+    func scheduleNotificationsWithInterval(interval: NSTimeInterval, times: Int) {
+        PushNotificationManager.sharedManager.schedulePushNotificationWithEvent(self, interval: interval, times: times)
+    }
+    
+    func cancelNotifications() {
+        PushNotificationManager.sharedManager.cancelNotificationsForEvent(self)
     }
 }
 
